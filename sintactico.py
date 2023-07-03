@@ -275,8 +275,6 @@ sintaxisErrors = list()
 def syntaxValidator(s):
   sintaxisErrors.clear()
   result = sintactico.parse(s)
-  logs = open('logs.txt', 'a')
-  logs.write(s+' '+str(datetime.now())+'\n')
   return result
 
 
