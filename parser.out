@@ -24,7 +24,7 @@ Rule 4     value -> STR
 Rule 5     value -> ID
 Rule 6     repeatLines -> line
 Rule 7     repeatLines -> line repeatLines
-Rule 8     line -> ID EQUALS value
+Rule 8     line -> ID EQUALSVAR value
 Rule 9     line -> stamentFor
 Rule 10    line -> consulta
 Rule 11    line -> push
@@ -96,8 +96,8 @@ COMPARE              : 29
 DIVIDE               : 32
 DOTCOMA              : 36 36
 ELSE                 : 39
-EQUALS               : 8 36
-EQUALSVAR            : 20 45 48 64 65
+EQUALS               : 36
+EQUALSVAR            : 8 20 45 48 64 65
 FLOAT                : 3 44
 FOR                  : 36
 FUNC                 : 54 55 56 59
@@ -178,7 +178,7 @@ state 0
     (1) program -> . repeatLines
     (6) repeatLines -> . line
     (7) repeatLines -> . line repeatLines
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -268,7 +268,7 @@ state 3
     (7) repeatLines -> line . repeatLines
     (6) repeatLines -> . line
     (7) repeatLines -> . line repeatLines
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -345,15 +345,14 @@ state 3
 
 state 4
 
-    (8) line -> ID . EQUALS value
+    (8) line -> ID . EQUALSVAR value
     (20) line -> ID . EQUALSVAR INT
     (45) array -> ID . EQUALSVAR LBRACKETS INT RBRACKETS ID LCURLY elemArray RCURLY
     (48) slice -> ID . EQUALSVAR LBRACKETS RBRACKETS ID LCURLY elemSlice RCURLY
     (23) retorno -> ID .
     (24) retorno -> ID . COMMA
 
-    EQUALS          shift and go to state 30
-    EQUALSVAR       shift and go to state 31
+    EQUALSVAR       shift and go to state 30
     ID              reduce using rule 23 (retorno -> ID .)
     CASE            reduce using rule 23 (retorno -> ID .)
     FOR             reduce using rule 23 (retorno -> ID .)
@@ -367,7 +366,7 @@ state 4
     FLOAT           reduce using rule 23 (retorno -> ID .)
     $end            reduce using rule 23 (retorno -> ID .)
     RCURLY          reduce using rule 23 (retorno -> ID .)
-    COMMA           shift and go to state 32
+    COMMA           shift and go to state 31
 
 
 state 5
@@ -507,7 +506,7 @@ state 12
 
     (16) line -> CASE . INT TWODOTS line
 
-    INT             shift and go to state 33
+    INT             shift and go to state 32
 
 
 state 13
@@ -633,7 +632,7 @@ state 19
 
     (36) stamentFor -> FOR . ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    ID              shift and go to state 34
+    ID              shift and go to state 33
 
 
 state 20
@@ -644,9 +643,9 @@ state 20
     (27) expression -> . ID comparator INT
     (28) expression -> . ID
 
-    ID              shift and go to state 36
+    ID              shift and go to state 35
 
-    expression                     shift and go to state 35
+    expression                     shift and go to state 34
 
 state 21
 
@@ -659,13 +658,13 @@ state 21
     (4) value -> . STR
     (5) value -> . ID
 
-    PUSH            shift and go to state 37
-    ID              shift and go to state 38
-    INT             shift and go to state 40
-    FLOAT           shift and go to state 41
-    STR             shift and go to state 42
+    PUSH            shift and go to state 36
+    ID              shift and go to state 37
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    STR             shift and go to state 41
 
-    value                          shift and go to state 39
+    value                          shift and go to state 38
 
 state 22
 
@@ -674,10 +673,10 @@ state 22
     (24) retorno -> . ID COMMA
     (25) retorno -> . RETURN retorno
 
-    ID              shift and go to state 44
+    ID              shift and go to state 43
     RETURN          shift and go to state 22
 
-    retorno                        shift and go to state 43
+    retorno                        shift and go to state 42
 
 state 23
 
@@ -701,18 +700,18 @@ state 23
     FLOAT           reduce using rule 68 (mathExpProd -> mathExp .)
     $end            reduce using rule 68 (mathExpProd -> mathExp .)
     RCURLY          reduce using rule 68 (mathExpProd -> mathExp .)
-    DIVIDE          shift and go to state 46
-    MINUS           shift and go to state 47
-    PLUS            shift and go to state 48
-    TIMES           shift and go to state 49
+    DIVIDE          shift and go to state 45
+    MINUS           shift and go to state 46
+    PLUS            shift and go to state 47
+    TIMES           shift and go to state 48
 
-    operator                       shift and go to state 45
+    operator                       shift and go to state 44
 
 state 24
 
     (37) switch -> SWITCH . ID LCURLY repeatLines RCURLY
 
-    ID              shift and go to state 50
+    ID              shift and go to state 49
 
 
 state 25
@@ -721,7 +720,7 @@ state 25
     (52) pila -> TYPE . STACK INTERFACE LCURLY RCURLY
     (53) pila -> TYPE . STACK STRUCT LCURLY ID LBRACKETS RBRACKETS value RCURLY
 
-    STACK           shift and go to state 51
+    STACK           shift and go to state 50
 
 
 state 26
@@ -730,7 +729,7 @@ state 26
     (64) declaration -> VAR . ID ID EQUALSVAR number
     (65) declaration -> VAR . ID ID EQUALSVAR STR
 
-    ID              shift and go to state 52
+    ID              shift and go to state 51
 
 
 state 27
@@ -759,17 +758,17 @@ state 27
     FLOAT           reduce using rule 66 (mathExp -> number .)
     $end            reduce using rule 66 (mathExp -> number .)
     RCURLY          reduce using rule 66 (mathExp -> number .)
-    DIVIDE          shift and go to state 46
-    MINUS           shift and go to state 47
-    PLUS            shift and go to state 48
-    TIMES           shift and go to state 49
+    DIVIDE          shift and go to state 45
+    MINUS           shift and go to state 46
+    PLUS            shift and go to state 47
+    TIMES           shift and go to state 48
 
   ! DIVIDE          [ reduce using rule 66 (mathExp -> number .) ]
   ! MINUS           [ reduce using rule 66 (mathExp -> number .) ]
   ! PLUS            [ reduce using rule 66 (mathExp -> number .) ]
   ! TIMES           [ reduce using rule 66 (mathExp -> number .) ]
 
-    operator                       shift and go to state 53
+    operator                       shift and go to state 52
 
 state 28
 
@@ -806,30 +805,24 @@ state 29
 
 state 30
 
-    (8) line -> ID EQUALS . value
+    (8) line -> ID EQUALSVAR . value
+    (20) line -> ID EQUALSVAR . INT
+    (45) array -> ID EQUALSVAR . LBRACKETS INT RBRACKETS ID LCURLY elemArray RCURLY
+    (48) slice -> ID EQUALSVAR . LBRACKETS RBRACKETS ID LCURLY elemSlice RCURLY
     (2) value -> . INT
     (3) value -> . FLOAT
     (4) value -> . STR
     (5) value -> . ID
 
-    INT             shift and go to state 40
-    FLOAT           shift and go to state 41
-    STR             shift and go to state 42
-    ID              shift and go to state 54
+    INT             shift and go to state 55
+    LBRACKETS       shift and go to state 56
+    FLOAT           shift and go to state 40
+    STR             shift and go to state 41
+    ID              shift and go to state 53
 
-    value                          shift and go to state 55
+    value                          shift and go to state 54
 
 state 31
-
-    (20) line -> ID EQUALSVAR . INT
-    (45) array -> ID EQUALSVAR . LBRACKETS INT RBRACKETS ID LCURLY elemArray RCURLY
-    (48) slice -> ID EQUALSVAR . LBRACKETS RBRACKETS ID LCURLY elemSlice RCURLY
-
-    INT             shift and go to state 56
-    LBRACKETS       shift and go to state 57
-
-
-state 32
 
     (24) retorno -> ID COMMA .
 
@@ -848,29 +841,29 @@ state 32
     RCURLY          reduce using rule 24 (retorno -> ID COMMA .)
 
 
-state 33
+state 32
 
     (16) line -> CASE INT . TWODOTS line
 
-    TWODOTS         shift and go to state 58
+    TWODOTS         shift and go to state 57
+
+
+state 33
+
+    (36) stamentFor -> FOR ID . EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
+
+    EQUALS          shift and go to state 58
 
 
 state 34
 
-    (36) stamentFor -> FOR ID . EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
-
-    EQUALS          shift and go to state 59
-
-
-state 35
-
     (38) consulta -> IF expression . LCURLY statements RCURLY
     (39) consulta -> IF expression . LCURLY statements RCURLY ELSE LCURLY statements RCURLY
 
-    LCURLY          shift and go to state 60
+    LCURLY          shift and go to state 59
 
 
-state 36
+state 35
 
     (26) expression -> ID . comparator ID
     (27) expression -> ID . comparator INT
@@ -880,59 +873,48 @@ state 36
     (31) comparator -> . MINUSTHAN
 
     LCURLY          reduce using rule 28 (expression -> ID .)
-    COMPARE         shift and go to state 62
-    MORETHAN        shift and go to state 63
-    MINUSTHAN       shift and go to state 64
+    COMPARE         shift and go to state 61
+    MORETHAN        shift and go to state 62
+    MINUSTHAN       shift and go to state 63
 
-    comparator                     shift and go to state 61
+    comparator                     shift and go to state 60
 
-state 37
+state 36
 
     (54) push -> FUNC PUSH . LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    LPAREN          shift and go to state 65
+    LPAREN          shift and go to state 64
 
 
-state 38
+state 37
 
     (59) funcion -> FUNC ID . LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY
     (56) func_declaration -> FUNC ID . LPAREN RPAREN LPAREN return_types RPAREN LCURLY repeatLines RCURLY
     (5) value -> ID .
 
   ! shift/reduce conflict for LPAREN resolved as shift
-    LPAREN          shift and go to state 66
+    LPAREN          shift and go to state 65
 
   ! LPAREN          [ reduce using rule 5 (value -> ID .) ]
 
 
-state 39
+state 38
 
     (55) funcion -> FUNC value . LPAREN RPAREN ID LCURLY repeatLines RETURN ID RCURLY
 
-    LPAREN          shift and go to state 67
+    LPAREN          shift and go to state 66
 
 
-state 40
+state 39
 
     (2) value -> INT .
 
     LPAREN          reduce using rule 2 (value -> INT .)
     ID              reduce using rule 2 (value -> INT .)
-    CASE            reduce using rule 2 (value -> INT .)
-    FOR             reduce using rule 2 (value -> INT .)
-    IF              reduce using rule 2 (value -> INT .)
-    FUNC            reduce using rule 2 (value -> INT .)
-    SWITCH          reduce using rule 2 (value -> INT .)
-    TYPE            reduce using rule 2 (value -> INT .)
-    RETURN          reduce using rule 2 (value -> INT .)
-    VAR             reduce using rule 2 (value -> INT .)
-    INT             reduce using rule 2 (value -> INT .)
-    FLOAT           reduce using rule 2 (value -> INT .)
-    $end            reduce using rule 2 (value -> INT .)
     RCURLY          reduce using rule 2 (value -> INT .)
 
 
-state 41
+state 40
 
     (3) value -> FLOAT .
 
@@ -952,7 +934,7 @@ state 41
     RCURLY          reduce using rule 3 (value -> FLOAT .)
 
 
-state 42
+state 41
 
     (4) value -> STR .
 
@@ -972,7 +954,7 @@ state 42
     RCURLY          reduce using rule 4 (value -> STR .)
 
 
-state 43
+state 42
 
     (25) retorno -> RETURN retorno .
 
@@ -991,7 +973,7 @@ state 43
     RCURLY          reduce using rule 25 (retorno -> RETURN retorno .)
 
 
-state 44
+state 43
 
     (23) retorno -> ID .
     (24) retorno -> ID . COMMA
@@ -1009,10 +991,10 @@ state 44
     FLOAT           reduce using rule 23 (retorno -> ID .)
     $end            reduce using rule 23 (retorno -> ID .)
     RCURLY          reduce using rule 23 (retorno -> ID .)
-    COMMA           shift and go to state 32
+    COMMA           shift and go to state 31
 
 
-state 45
+state 44
 
     (69) mathExpProd -> mathExp operator . mathExpProd
     (68) mathExpProd -> . mathExp
@@ -1026,10 +1008,10 @@ state 45
     FLOAT           shift and go to state 28
 
     mathExp                        shift and go to state 23
-    mathExpProd                    shift and go to state 68
+    mathExpProd                    shift and go to state 67
     number                         shift and go to state 27
 
-state 46
+state 45
 
     (32) operator -> DIVIDE .
 
@@ -1037,7 +1019,7 @@ state 46
     FLOAT           reduce using rule 32 (operator -> DIVIDE .)
 
 
-state 47
+state 46
 
     (33) operator -> MINUS .
 
@@ -1045,7 +1027,7 @@ state 47
     FLOAT           reduce using rule 33 (operator -> MINUS .)
 
 
-state 48
+state 47
 
     (34) operator -> PLUS .
 
@@ -1053,7 +1035,7 @@ state 48
     FLOAT           reduce using rule 34 (operator -> PLUS .)
 
 
-state 49
+state 48
 
     (35) operator -> TIMES .
 
@@ -1061,34 +1043,34 @@ state 49
     FLOAT           reduce using rule 35 (operator -> TIMES .)
 
 
-state 50
+state 49
 
     (37) switch -> SWITCH ID . LCURLY repeatLines RCURLY
 
-    LCURLY          shift and go to state 69
+    LCURLY          shift and go to state 68
 
 
-state 51
+state 50
 
     (51) pila -> TYPE STACK . LBRACKETS RBRACKETS ID
     (52) pila -> TYPE STACK . INTERFACE LCURLY RCURLY
     (53) pila -> TYPE STACK . STRUCT LCURLY ID LBRACKETS RBRACKETS value RCURLY
 
-    LBRACKETS       shift and go to state 70
-    INTERFACE       shift and go to state 71
-    STRUCT          shift and go to state 72
+    LBRACKETS       shift and go to state 69
+    INTERFACE       shift and go to state 70
+    STRUCT          shift and go to state 71
 
 
-state 52
+state 51
 
     (63) declaration -> VAR ID . ID
     (64) declaration -> VAR ID . ID EQUALSVAR number
     (65) declaration -> VAR ID . ID EQUALSVAR STR
 
-    ID              shift and go to state 73
+    ID              shift and go to state 72
 
 
-state 53
+state 52
 
     (67) mathExp -> number operator . number
     (43) number -> . INT
@@ -1097,9 +1079,9 @@ state 53
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    number                         shift and go to state 74
+    number                         shift and go to state 73
 
-state 54
+state 53
 
     (5) value -> ID .
 
@@ -1118,57 +1100,85 @@ state 54
     RCURLY          reduce using rule 5 (value -> ID .)
 
 
+state 54
+
+    (8) line -> ID EQUALSVAR value .
+
+    ID              reduce using rule 8 (line -> ID EQUALSVAR value .)
+    CASE            reduce using rule 8 (line -> ID EQUALSVAR value .)
+    FOR             reduce using rule 8 (line -> ID EQUALSVAR value .)
+    IF              reduce using rule 8 (line -> ID EQUALSVAR value .)
+    FUNC            reduce using rule 8 (line -> ID EQUALSVAR value .)
+    SWITCH          reduce using rule 8 (line -> ID EQUALSVAR value .)
+    TYPE            reduce using rule 8 (line -> ID EQUALSVAR value .)
+    RETURN          reduce using rule 8 (line -> ID EQUALSVAR value .)
+    VAR             reduce using rule 8 (line -> ID EQUALSVAR value .)
+    INT             reduce using rule 8 (line -> ID EQUALSVAR value .)
+    FLOAT           reduce using rule 8 (line -> ID EQUALSVAR value .)
+    $end            reduce using rule 8 (line -> ID EQUALSVAR value .)
+    RCURLY          reduce using rule 8 (line -> ID EQUALSVAR value .)
+
+
 state 55
 
-    (8) line -> ID EQUALS value .
+    (20) line -> ID EQUALSVAR INT .
+    (2) value -> INT .
 
-    ID              reduce using rule 8 (line -> ID EQUALS value .)
-    CASE            reduce using rule 8 (line -> ID EQUALS value .)
-    FOR             reduce using rule 8 (line -> ID EQUALS value .)
-    IF              reduce using rule 8 (line -> ID EQUALS value .)
-    FUNC            reduce using rule 8 (line -> ID EQUALS value .)
-    SWITCH          reduce using rule 8 (line -> ID EQUALS value .)
-    TYPE            reduce using rule 8 (line -> ID EQUALS value .)
-    RETURN          reduce using rule 8 (line -> ID EQUALS value .)
-    VAR             reduce using rule 8 (line -> ID EQUALS value .)
-    INT             reduce using rule 8 (line -> ID EQUALS value .)
-    FLOAT           reduce using rule 8 (line -> ID EQUALS value .)
-    $end            reduce using rule 8 (line -> ID EQUALS value .)
-    RCURLY          reduce using rule 8 (line -> ID EQUALS value .)
+  ! reduce/reduce conflict for ID resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for CASE resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for FOR resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for IF resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for FUNC resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for SWITCH resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for TYPE resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for RETURN resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for VAR resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for INT resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for FLOAT resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for $end resolved using rule 2 (value -> INT .)
+  ! reduce/reduce conflict for RCURLY resolved using rule 2 (value -> INT .)
+    ID              reduce using rule 2 (value -> INT .)
+    CASE            reduce using rule 2 (value -> INT .)
+    FOR             reduce using rule 2 (value -> INT .)
+    IF              reduce using rule 2 (value -> INT .)
+    FUNC            reduce using rule 2 (value -> INT .)
+    SWITCH          reduce using rule 2 (value -> INT .)
+    TYPE            reduce using rule 2 (value -> INT .)
+    RETURN          reduce using rule 2 (value -> INT .)
+    VAR             reduce using rule 2 (value -> INT .)
+    INT             reduce using rule 2 (value -> INT .)
+    FLOAT           reduce using rule 2 (value -> INT .)
+    $end            reduce using rule 2 (value -> INT .)
+    RCURLY          reduce using rule 2 (value -> INT .)
+
+  ! ID              [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! CASE            [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! FOR             [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! IF              [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! FUNC            [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! SWITCH          [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! TYPE            [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! RETURN          [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! VAR             [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! INT             [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! FLOAT           [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! $end            [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
+  ! RCURLY          [ reduce using rule 20 (line -> ID EQUALSVAR INT .) ]
 
 
 state 56
 
-    (20) line -> ID EQUALSVAR INT .
+    (45) array -> ID EQUALSVAR LBRACKETS . INT RBRACKETS ID LCURLY elemArray RCURLY
+    (48) slice -> ID EQUALSVAR LBRACKETS . RBRACKETS ID LCURLY elemSlice RCURLY
 
-    ID              reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    CASE            reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    FOR             reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    IF              reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    FUNC            reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    SWITCH          reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    TYPE            reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    RETURN          reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    VAR             reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    INT             reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    FLOAT           reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    $end            reduce using rule 20 (line -> ID EQUALSVAR INT .)
-    RCURLY          reduce using rule 20 (line -> ID EQUALSVAR INT .)
+    INT             shift and go to state 74
+    RBRACKETS       shift and go to state 75
 
 
 state 57
 
-    (45) array -> ID EQUALSVAR LBRACKETS . INT RBRACKETS ID LCURLY elemArray RCURLY
-    (48) slice -> ID EQUALSVAR LBRACKETS . RBRACKETS ID LCURLY elemSlice RCURLY
-
-    INT             shift and go to state 75
-    RBRACKETS       shift and go to state 76
-
-
-state 58
-
     (16) line -> CASE INT TWODOTS . line
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -1221,7 +1231,7 @@ state 58
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    line                           shift and go to state 77
+    line                           shift and go to state 76
     stamentFor                     shift and go to state 5
     consulta                       shift and go to state 6
     push                           shift and go to state 7
@@ -1237,14 +1247,14 @@ state 58
     mathExp                        shift and go to state 23
     number                         shift and go to state 27
 
-state 59
+state 58
 
     (36) stamentFor -> FOR ID EQUALS . INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    INT             shift and go to state 78
+    INT             shift and go to state 77
 
 
-state 60
+state 59
 
     (38) consulta -> IF expression LCURLY . statements RCURLY
     (39) consulta -> IF expression LCURLY . statements RCURLY ELSE LCURLY statements RCURLY
@@ -1252,21 +1262,21 @@ state 60
     (41) statements -> . statement COMMA statements
     (42) statement -> . ID
 
-    ID              shift and go to state 81
+    ID              shift and go to state 80
 
-    statements                     shift and go to state 79
-    statement                      shift and go to state 80
+    statements                     shift and go to state 78
+    statement                      shift and go to state 79
 
-state 61
+state 60
 
     (26) expression -> ID comparator . ID
     (27) expression -> ID comparator . INT
 
-    ID              shift and go to state 82
-    INT             shift and go to state 83
+    ID              shift and go to state 81
+    INT             shift and go to state 82
 
 
-state 62
+state 61
 
     (29) comparator -> COMPARE .
 
@@ -1274,7 +1284,7 @@ state 62
     INT             reduce using rule 29 (comparator -> COMPARE .)
 
 
-state 63
+state 62
 
     (30) comparator -> MORETHAN .
 
@@ -1282,7 +1292,7 @@ state 63
     INT             reduce using rule 30 (comparator -> MORETHAN .)
 
 
-state 64
+state 63
 
     (31) comparator -> MINUSTHAN .
 
@@ -1290,14 +1300,14 @@ state 64
     INT             reduce using rule 31 (comparator -> MINUSTHAN .)
 
 
-state 65
+state 64
 
     (54) push -> FUNC PUSH LPAREN . ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    ID              shift and go to state 84
+    ID              shift and go to state 83
 
 
-state 66
+state 65
 
     (59) funcion -> FUNC ID LPAREN . param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY
     (56) func_declaration -> FUNC ID LPAREN . RPAREN LPAREN return_types RPAREN LCURLY repeatLines RCURLY
@@ -1309,24 +1319,24 @@ state 66
     (4) value -> . STR
     (5) value -> . ID
 
-    RPAREN          shift and go to state 86
-    INT             shift and go to state 40
-    FLOAT           shift and go to state 41
-    STR             shift and go to state 42
-    ID              shift and go to state 54
+    RPAREN          shift and go to state 85
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    STR             shift and go to state 41
+    ID              shift and go to state 53
 
-    param_list                     shift and go to state 85
-    param                          shift and go to state 87
-    value                          shift and go to state 88
+    param_list                     shift and go to state 84
+    param                          shift and go to state 86
+    value                          shift and go to state 87
 
-state 67
+state 66
 
     (55) funcion -> FUNC value LPAREN . RPAREN ID LCURLY repeatLines RETURN ID RCURLY
 
-    RPAREN          shift and go to state 89
+    RPAREN          shift and go to state 88
 
 
-state 68
+state 67
 
     (69) mathExpProd -> mathExp operator mathExpProd .
 
@@ -1345,12 +1355,12 @@ state 68
     RCURLY          reduce using rule 69 (mathExpProd -> mathExp operator mathExpProd .)
 
 
-state 69
+state 68
 
     (37) switch -> SWITCH ID LCURLY . repeatLines RCURLY
     (6) repeatLines -> . line
     (7) repeatLines -> . line repeatLines
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -1403,7 +1413,7 @@ state 69
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    repeatLines                    shift and go to state 90
+    repeatLines                    shift and go to state 89
     line                           shift and go to state 3
     stamentFor                     shift and go to state 5
     consulta                       shift and go to state 6
@@ -1420,28 +1430,28 @@ state 69
     mathExp                        shift and go to state 23
     number                         shift and go to state 27
 
-state 70
+state 69
 
     (51) pila -> TYPE STACK LBRACKETS . RBRACKETS ID
 
-    RBRACKETS       shift and go to state 91
+    RBRACKETS       shift and go to state 90
+
+
+state 70
+
+    (52) pila -> TYPE STACK INTERFACE . LCURLY RCURLY
+
+    LCURLY          shift and go to state 91
 
 
 state 71
 
-    (52) pila -> TYPE STACK INTERFACE . LCURLY RCURLY
+    (53) pila -> TYPE STACK STRUCT . LCURLY ID LBRACKETS RBRACKETS value RCURLY
 
     LCURLY          shift and go to state 92
 
 
 state 72
-
-    (53) pila -> TYPE STACK STRUCT . LCURLY ID LBRACKETS RBRACKETS value RCURLY
-
-    LCURLY          shift and go to state 93
-
-
-state 73
 
     (63) declaration -> VAR ID ID .
     (64) declaration -> VAR ID ID . EQUALSVAR number
@@ -1460,10 +1470,10 @@ state 73
     FLOAT           reduce using rule 63 (declaration -> VAR ID ID .)
     $end            reduce using rule 63 (declaration -> VAR ID ID .)
     RCURLY          reduce using rule 63 (declaration -> VAR ID ID .)
-    EQUALSVAR       shift and go to state 94
+    EQUALSVAR       shift and go to state 93
 
 
-state 74
+state 73
 
     (67) mathExp -> number operator number .
 
@@ -1486,21 +1496,21 @@ state 74
     RCURLY          reduce using rule 67 (mathExp -> number operator number .)
 
 
-state 75
+state 74
 
     (45) array -> ID EQUALSVAR LBRACKETS INT . RBRACKETS ID LCURLY elemArray RCURLY
 
-    RBRACKETS       shift and go to state 95
+    RBRACKETS       shift and go to state 94
 
 
-state 76
+state 75
 
     (48) slice -> ID EQUALSVAR LBRACKETS RBRACKETS . ID LCURLY elemSlice RCURLY
 
-    ID              shift and go to state 96
+    ID              shift and go to state 95
 
 
-state 77
+state 76
 
     (16) line -> CASE INT TWODOTS line .
 
@@ -1519,31 +1529,31 @@ state 77
     RCURLY          reduce using rule 16 (line -> CASE INT TWODOTS line .)
 
 
-state 78
+state 77
 
     (36) stamentFor -> FOR ID EQUALS INT . DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    DOTCOMA         shift and go to state 97
+    DOTCOMA         shift and go to state 96
 
 
-state 79
+state 78
 
     (38) consulta -> IF expression LCURLY statements . RCURLY
     (39) consulta -> IF expression LCURLY statements . RCURLY ELSE LCURLY statements RCURLY
 
-    RCURLY          shift and go to state 98
+    RCURLY          shift and go to state 97
 
 
-state 80
+state 79
 
     (40) statements -> statement .
     (41) statements -> statement . COMMA statements
 
     RCURLY          reduce using rule 40 (statements -> statement .)
-    COMMA           shift and go to state 99
+    COMMA           shift and go to state 98
 
 
-state 81
+state 80
 
     (42) statement -> ID .
 
@@ -1551,44 +1561,44 @@ state 81
     RCURLY          reduce using rule 42 (statement -> ID .)
 
 
-state 82
+state 81
 
     (26) expression -> ID comparator ID .
 
     LCURLY          reduce using rule 26 (expression -> ID comparator ID .)
 
 
-state 83
+state 82
 
     (27) expression -> ID comparator INT .
 
     LCURLY          reduce using rule 27 (expression -> ID comparator INT .)
 
 
-state 84
+state 83
 
     (54) push -> FUNC PUSH LPAREN ID . STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    STACK           shift and go to state 100
+    STACK           shift and go to state 99
 
 
-state 85
+state 84
 
     (59) funcion -> FUNC ID LPAREN param_list . RPAREN ID LCURLY repeatLines RETURN ID RCURLY
     (61) param_list -> param_list . COMMA param
 
-    RPAREN          shift and go to state 101
-    COMMA           shift and go to state 102
+    RPAREN          shift and go to state 100
+    COMMA           shift and go to state 101
 
 
-state 86
+state 85
 
     (56) func_declaration -> FUNC ID LPAREN RPAREN . LPAREN return_types RPAREN LCURLY repeatLines RCURLY
 
-    LPAREN          shift and go to state 103
+    LPAREN          shift and go to state 102
 
 
-state 87
+state 86
 
     (60) param_list -> param .
 
@@ -1596,83 +1606,83 @@ state 87
     COMMA           reduce using rule 60 (param_list -> param .)
 
 
-state 88
+state 87
 
     (62) param -> value . ID
+
+    ID              shift and go to state 103
+
+
+state 88
+
+    (55) funcion -> FUNC value LPAREN RPAREN . ID LCURLY repeatLines RETURN ID RCURLY
 
     ID              shift and go to state 104
 
 
 state 89
 
-    (55) funcion -> FUNC value LPAREN RPAREN . ID LCURLY repeatLines RETURN ID RCURLY
+    (37) switch -> SWITCH ID LCURLY repeatLines . RCURLY
 
-    ID              shift and go to state 105
+    RCURLY          shift and go to state 105
 
 
 state 90
 
-    (37) switch -> SWITCH ID LCURLY repeatLines . RCURLY
+    (51) pila -> TYPE STACK LBRACKETS RBRACKETS . ID
 
-    RCURLY          shift and go to state 106
+    ID              shift and go to state 106
 
 
 state 91
 
-    (51) pila -> TYPE STACK LBRACKETS RBRACKETS . ID
+    (52) pila -> TYPE STACK INTERFACE LCURLY . RCURLY
 
-    ID              shift and go to state 107
+    RCURLY          shift and go to state 107
 
 
 state 92
 
-    (52) pila -> TYPE STACK INTERFACE LCURLY . RCURLY
+    (53) pila -> TYPE STACK STRUCT LCURLY . ID LBRACKETS RBRACKETS value RCURLY
 
-    RCURLY          shift and go to state 108
+    ID              shift and go to state 108
 
 
 state 93
-
-    (53) pila -> TYPE STACK STRUCT LCURLY . ID LBRACKETS RBRACKETS value RCURLY
-
-    ID              shift and go to state 109
-
-
-state 94
 
     (64) declaration -> VAR ID ID EQUALSVAR . number
     (65) declaration -> VAR ID ID EQUALSVAR . STR
     (43) number -> . INT
     (44) number -> . FLOAT
 
-    STR             shift and go to state 111
+    STR             shift and go to state 110
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    number                         shift and go to state 110
+    number                         shift and go to state 109
 
-state 95
+state 94
 
     (45) array -> ID EQUALSVAR LBRACKETS INT RBRACKETS . ID LCURLY elemArray RCURLY
 
-    ID              shift and go to state 112
+    ID              shift and go to state 111
+
+
+state 95
+
+    (48) slice -> ID EQUALSVAR LBRACKETS RBRACKETS ID . LCURLY elemSlice RCURLY
+
+    LCURLY          shift and go to state 112
 
 
 state 96
 
-    (48) slice -> ID EQUALSVAR LBRACKETS RBRACKETS ID . LCURLY elemSlice RCURLY
+    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA . ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    LCURLY          shift and go to state 113
+    ID              shift and go to state 113
 
 
 state 97
-
-    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA . ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
-
-    ID              shift and go to state 114
-
-
-state 98
 
     (38) consulta -> IF expression LCURLY statements RCURLY .
     (39) consulta -> IF expression LCURLY statements RCURLY . ELSE LCURLY statements RCURLY
@@ -1690,36 +1700,36 @@ state 98
     FLOAT           reduce using rule 38 (consulta -> IF expression LCURLY statements RCURLY .)
     $end            reduce using rule 38 (consulta -> IF expression LCURLY statements RCURLY .)
     RCURLY          reduce using rule 38 (consulta -> IF expression LCURLY statements RCURLY .)
-    ELSE            shift and go to state 115
+    ELSE            shift and go to state 114
 
 
-state 99
+state 98
 
     (41) statements -> statement COMMA . statements
     (40) statements -> . statement
     (41) statements -> . statement COMMA statements
     (42) statement -> . ID
 
-    ID              shift and go to state 81
+    ID              shift and go to state 80
 
-    statement                      shift and go to state 80
-    statements                     shift and go to state 116
+    statement                      shift and go to state 79
+    statements                     shift and go to state 115
 
-state 100
+state 99
 
     (54) push -> FUNC PUSH LPAREN ID STACK . COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    COMMA           shift and go to state 117
+    COMMA           shift and go to state 116
 
 
-state 101
+state 100
 
     (59) funcion -> FUNC ID LPAREN param_list RPAREN . ID LCURLY repeatLines RETURN ID RCURLY
 
-    ID              shift and go to state 118
+    ID              shift and go to state 117
 
 
-state 102
+state 101
 
     (61) param_list -> param_list COMMA . param
     (62) param -> . value ID
@@ -1728,25 +1738,25 @@ state 102
     (4) value -> . STR
     (5) value -> . ID
 
-    INT             shift and go to state 40
-    FLOAT           shift and go to state 41
-    STR             shift and go to state 42
-    ID              shift and go to state 54
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    STR             shift and go to state 41
+    ID              shift and go to state 53
 
-    param                          shift and go to state 119
-    value                          shift and go to state 88
+    param                          shift and go to state 118
+    value                          shift and go to state 87
 
-state 103
+state 102
 
     (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN . return_types RPAREN LCURLY repeatLines RCURLY
     (57) return_types -> . ID COMMA ID
     (58) return_types -> . ID
 
-    ID              shift and go to state 120
+    ID              shift and go to state 119
 
-    return_types                   shift and go to state 121
+    return_types                   shift and go to state 120
 
-state 104
+state 103
 
     (62) param -> value ID .
 
@@ -1754,14 +1764,14 @@ state 104
     COMMA           reduce using rule 62 (param -> value ID .)
 
 
-state 105
+state 104
 
     (55) funcion -> FUNC value LPAREN RPAREN ID . LCURLY repeatLines RETURN ID RCURLY
 
-    LCURLY          shift and go to state 122
+    LCURLY          shift and go to state 121
 
 
-state 106
+state 105
 
     (37) switch -> SWITCH ID LCURLY repeatLines RCURLY .
 
@@ -1780,7 +1790,7 @@ state 106
     RCURLY          reduce using rule 37 (switch -> SWITCH ID LCURLY repeatLines RCURLY .)
 
 
-state 107
+state 106
 
     (51) pila -> TYPE STACK LBRACKETS RBRACKETS ID .
 
@@ -1799,7 +1809,7 @@ state 107
     RCURLY          reduce using rule 51 (pila -> TYPE STACK LBRACKETS RBRACKETS ID .)
 
 
-state 108
+state 107
 
     (52) pila -> TYPE STACK INTERFACE LCURLY RCURLY .
 
@@ -1818,14 +1828,14 @@ state 108
     RCURLY          reduce using rule 52 (pila -> TYPE STACK INTERFACE LCURLY RCURLY .)
 
 
-state 109
+state 108
 
     (53) pila -> TYPE STACK STRUCT LCURLY ID . LBRACKETS RBRACKETS value RCURLY
 
-    LBRACKETS       shift and go to state 123
+    LBRACKETS       shift and go to state 122
 
 
-state 110
+state 109
 
     (64) declaration -> VAR ID ID EQUALSVAR number .
 
@@ -1844,7 +1854,7 @@ state 110
     RCURLY          reduce using rule 64 (declaration -> VAR ID ID EQUALSVAR number .)
 
 
-state 111
+state 110
 
     (65) declaration -> VAR ID ID EQUALSVAR STR .
 
@@ -1863,14 +1873,14 @@ state 111
     RCURLY          reduce using rule 65 (declaration -> VAR ID ID EQUALSVAR STR .)
 
 
-state 112
+state 111
 
     (45) array -> ID EQUALSVAR LBRACKETS INT RBRACKETS ID . LCURLY elemArray RCURLY
 
-    LCURLY          shift and go to state 124
+    LCURLY          shift and go to state 123
 
 
-state 113
+state 112
 
     (48) slice -> ID EQUALSVAR LBRACKETS RBRACKETS ID LCURLY . elemSlice RCURLY
     (49) elemSlice -> . number
@@ -1881,45 +1891,45 @@ state 113
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    elemSlice                      shift and go to state 125
-    number                         shift and go to state 126
+    elemSlice                      shift and go to state 124
+    number                         shift and go to state 125
 
-state 114
+state 113
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID . MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    MINUSTHAN       shift and go to state 127
+    MINUSTHAN       shift and go to state 126
 
 
-state 115
+state 114
 
     (39) consulta -> IF expression LCURLY statements RCURLY ELSE . LCURLY statements RCURLY
 
-    LCURLY          shift and go to state 128
+    LCURLY          shift and go to state 127
 
 
-state 116
+state 115
 
     (41) statements -> statement COMMA statements .
 
     RCURLY          reduce using rule 41 (statements -> statement COMMA statements .)
 
 
-state 117
+state 116
 
     (54) push -> FUNC PUSH LPAREN ID STACK COMMA . ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    ID              shift and go to state 129
+    ID              shift and go to state 128
 
 
-state 118
+state 117
 
     (59) funcion -> FUNC ID LPAREN param_list RPAREN ID . LCURLY repeatLines RETURN ID RCURLY
 
-    LCURLY          shift and go to state 130
+    LCURLY          shift and go to state 129
 
 
-state 119
+state 118
 
     (61) param_list -> param_list COMMA param .
 
@@ -1927,28 +1937,28 @@ state 119
     COMMA           reduce using rule 61 (param_list -> param_list COMMA param .)
 
 
-state 120
+state 119
 
     (57) return_types -> ID . COMMA ID
     (58) return_types -> ID .
 
-    COMMA           shift and go to state 131
+    COMMA           shift and go to state 130
     RPAREN          reduce using rule 58 (return_types -> ID .)
+
+
+state 120
+
+    (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types . RPAREN LCURLY repeatLines RCURLY
+
+    RPAREN          shift and go to state 131
 
 
 state 121
 
-    (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types . RPAREN LCURLY repeatLines RCURLY
-
-    RPAREN          shift and go to state 132
-
-
-state 122
-
     (55) funcion -> FUNC value LPAREN RPAREN ID LCURLY . repeatLines RETURN ID RCURLY
     (6) repeatLines -> . line
     (7) repeatLines -> . line repeatLines
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -2001,7 +2011,7 @@ state 122
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    repeatLines                    shift and go to state 133
+    repeatLines                    shift and go to state 132
     line                           shift and go to state 3
     stamentFor                     shift and go to state 5
     consulta                       shift and go to state 6
@@ -2018,14 +2028,14 @@ state 122
     mathExp                        shift and go to state 23
     number                         shift and go to state 27
 
-state 123
+state 122
 
     (53) pila -> TYPE STACK STRUCT LCURLY ID LBRACKETS . RBRACKETS value RCURLY
 
-    RBRACKETS       shift and go to state 134
+    RBRACKETS       shift and go to state 133
 
 
-state 124
+state 123
 
     (45) array -> ID EQUALSVAR LBRACKETS INT RBRACKETS ID LCURLY . elemArray RCURLY
     (46) elemArray -> . number
@@ -2036,57 +2046,57 @@ state 124
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    elemArray                      shift and go to state 135
-    number                         shift and go to state 136
+    elemArray                      shift and go to state 134
+    number                         shift and go to state 135
 
-state 125
+state 124
 
     (48) slice -> ID EQUALSVAR LBRACKETS RBRACKETS ID LCURLY elemSlice . RCURLY
 
-    RCURLY          shift and go to state 137
+    RCURLY          shift and go to state 136
 
 
-state 126
+state 125
 
     (49) elemSlice -> number .
     (50) elemSlice -> number . COMMA elemSlice
 
     RCURLY          reduce using rule 49 (elemSlice -> number .)
-    COMMA           shift and go to state 138
+    COMMA           shift and go to state 137
 
 
-state 127
+state 126
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN . LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    LEN             shift and go to state 139
+    LEN             shift and go to state 138
 
 
-state 128
+state 127
 
     (39) consulta -> IF expression LCURLY statements RCURLY ELSE LCURLY . statements RCURLY
     (40) statements -> . statement
     (41) statements -> . statement COMMA statements
     (42) statement -> . ID
 
-    ID              shift and go to state 81
+    ID              shift and go to state 80
 
-    statements                     shift and go to state 140
-    statement                      shift and go to state 80
+    statements                     shift and go to state 139
+    statement                      shift and go to state 79
 
-state 129
+state 128
 
     (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID . ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    ID              shift and go to state 141
+    ID              shift and go to state 140
 
 
-state 130
+state 129
 
     (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY . repeatLines RETURN ID RCURLY
     (6) repeatLines -> . line
     (7) repeatLines -> . line repeatLines
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -2139,7 +2149,7 @@ state 130
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    repeatLines                    shift and go to state 142
+    repeatLines                    shift and go to state 141
     line                           shift and go to state 3
     stamentFor                     shift and go to state 5
     consulta                       shift and go to state 6
@@ -2156,28 +2166,28 @@ state 130
     mathExp                        shift and go to state 23
     number                         shift and go to state 27
 
-state 131
+state 130
 
     (57) return_types -> ID COMMA . ID
 
-    ID              shift and go to state 143
+    ID              shift and go to state 142
+
+
+state 131
+
+    (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types RPAREN . LCURLY repeatLines RCURLY
+
+    LCURLY          shift and go to state 143
 
 
 state 132
 
-    (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types RPAREN . LCURLY repeatLines RCURLY
+    (55) funcion -> FUNC value LPAREN RPAREN ID LCURLY repeatLines . RETURN ID RCURLY
 
-    LCURLY          shift and go to state 144
+    RETURN          shift and go to state 144
 
 
 state 133
-
-    (55) funcion -> FUNC value LPAREN RPAREN ID LCURLY repeatLines . RETURN ID RCURLY
-
-    RETURN          shift and go to state 145
-
-
-state 134
 
     (53) pila -> TYPE STACK STRUCT LCURLY ID LBRACKETS RBRACKETS . value RCURLY
     (2) value -> . INT
@@ -2185,30 +2195,30 @@ state 134
     (4) value -> . STR
     (5) value -> . ID
 
-    INT             shift and go to state 40
-    FLOAT           shift and go to state 41
-    STR             shift and go to state 42
-    ID              shift and go to state 54
+    INT             shift and go to state 39
+    FLOAT           shift and go to state 40
+    STR             shift and go to state 41
+    ID              shift and go to state 53
 
-    value                          shift and go to state 146
+    value                          shift and go to state 145
 
-state 135
+state 134
 
     (45) array -> ID EQUALSVAR LBRACKETS INT RBRACKETS ID LCURLY elemArray . RCURLY
 
-    RCURLY          shift and go to state 147
+    RCURLY          shift and go to state 146
 
 
-state 136
+state 135
 
     (46) elemArray -> number .
     (47) elemArray -> number . COMMA elemArray
 
     RCURLY          reduce using rule 46 (elemArray -> number .)
-    COMMA           shift and go to state 148
+    COMMA           shift and go to state 147
 
 
-state 137
+state 136
 
     (48) slice -> ID EQUALSVAR LBRACKETS RBRACKETS ID LCURLY elemSlice RCURLY .
 
@@ -2227,7 +2237,7 @@ state 137
     RCURLY          reduce using rule 48 (slice -> ID EQUALSVAR LBRACKETS RBRACKETS ID LCURLY elemSlice RCURLY .)
 
 
-state 138
+state 137
 
     (50) elemSlice -> number COMMA . elemSlice
     (49) elemSlice -> . number
@@ -2238,50 +2248,50 @@ state 138
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    number                         shift and go to state 126
-    elemSlice                      shift and go to state 149
+    number                         shift and go to state 125
+    elemSlice                      shift and go to state 148
 
-state 139
+state 138
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN . LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    LPAREN          shift and go to state 150
+    LPAREN          shift and go to state 149
+
+
+state 139
+
+    (39) consulta -> IF expression LCURLY statements RCURLY ELSE LCURLY statements . RCURLY
+
+    RCURLY          shift and go to state 150
 
 
 state 140
 
-    (39) consulta -> IF expression LCURLY statements RCURLY ELSE LCURLY statements . RCURLY
+    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID . RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    RCURLY          shift and go to state 151
+    RPAREN          shift and go to state 151
 
 
 state 141
 
-    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID . RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
+    (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines . RETURN ID RCURLY
 
-    RPAREN          shift and go to state 152
+    RETURN          shift and go to state 152
 
 
 state 142
-
-    (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines . RETURN ID RCURLY
-
-    RETURN          shift and go to state 153
-
-
-state 143
 
     (57) return_types -> ID COMMA ID .
 
     RPAREN          reduce using rule 57 (return_types -> ID COMMA ID .)
 
 
-state 144
+state 143
 
     (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types RPAREN LCURLY . repeatLines RCURLY
     (6) repeatLines -> . line
     (7) repeatLines -> . line repeatLines
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -2334,7 +2344,7 @@ state 144
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    repeatLines                    shift and go to state 154
+    repeatLines                    shift and go to state 153
     line                           shift and go to state 3
     stamentFor                     shift and go to state 5
     consulta                       shift and go to state 6
@@ -2351,21 +2361,21 @@ state 144
     mathExp                        shift and go to state 23
     number                         shift and go to state 27
 
-state 145
+state 144
 
     (55) funcion -> FUNC value LPAREN RPAREN ID LCURLY repeatLines RETURN . ID RCURLY
 
-    ID              shift and go to state 155
+    ID              shift and go to state 154
 
 
-state 146
+state 145
 
     (53) pila -> TYPE STACK STRUCT LCURLY ID LBRACKETS RBRACKETS value . RCURLY
 
-    RCURLY          shift and go to state 156
+    RCURLY          shift and go to state 155
 
 
-state 147
+state 146
 
     (45) array -> ID EQUALSVAR LBRACKETS INT RBRACKETS ID LCURLY elemArray RCURLY .
 
@@ -2384,7 +2394,7 @@ state 147
     RCURLY          reduce using rule 45 (array -> ID EQUALSVAR LBRACKETS INT RBRACKETS ID LCURLY elemArray RCURLY .)
 
 
-state 148
+state 147
 
     (47) elemArray -> number COMMA . elemArray
     (46) elemArray -> . number
@@ -2395,24 +2405,24 @@ state 148
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    number                         shift and go to state 136
-    elemArray                      shift and go to state 157
+    number                         shift and go to state 135
+    elemArray                      shift and go to state 156
 
-state 149
+state 148
 
     (50) elemSlice -> number COMMA elemSlice .
 
     RCURLY          reduce using rule 50 (elemSlice -> number COMMA elemSlice .)
 
 
-state 150
+state 149
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN . ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    ID              shift and go to state 158
+    ID              shift and go to state 157
 
 
-state 151
+state 150
 
     (39) consulta -> IF expression LCURLY statements RCURLY ELSE LCURLY statements RCURLY .
 
@@ -2431,35 +2441,35 @@ state 151
     RCURLY          reduce using rule 39 (consulta -> IF expression LCURLY statements RCURLY ELSE LCURLY statements RCURLY .)
 
 
-state 152
+state 151
 
     (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN . STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    STACK           shift and go to state 159
+    STACK           shift and go to state 158
+
+
+state 152
+
+    (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN . ID RCURLY
+
+    ID              shift and go to state 159
 
 
 state 153
 
-    (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN . ID RCURLY
+    (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types RPAREN LCURLY repeatLines . RCURLY
 
-    ID              shift and go to state 160
+    RCURLY          shift and go to state 160
 
 
 state 154
 
-    (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types RPAREN LCURLY repeatLines . RCURLY
+    (55) funcion -> FUNC value LPAREN RPAREN ID LCURLY repeatLines RETURN ID . RCURLY
 
     RCURLY          shift and go to state 161
 
 
 state 155
-
-    (55) funcion -> FUNC value LPAREN RPAREN ID LCURLY repeatLines RETURN ID . RCURLY
-
-    RCURLY          shift and go to state 162
-
-
-state 156
 
     (53) pila -> TYPE STACK STRUCT LCURLY ID LBRACKETS RBRACKETS value RCURLY .
 
@@ -2478,35 +2488,35 @@ state 156
     RCURLY          reduce using rule 53 (pila -> TYPE STACK STRUCT LCURLY ID LBRACKETS RBRACKETS value RCURLY .)
 
 
-state 157
+state 156
 
     (47) elemArray -> number COMMA elemArray .
 
     RCURLY          reduce using rule 47 (elemArray -> number COMMA elemArray .)
 
 
-state 158
+state 157
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID . RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    RPAREN          shift and go to state 163
+    RPAREN          shift and go to state 162
+
+
+state 158
+
+    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK . LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
+
+    LCURLY          shift and go to state 163
 
 
 state 159
 
-    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK . LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
+    (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID . RCURLY
 
-    LCURLY          shift and go to state 164
+    RCURLY          shift and go to state 164
 
 
 state 160
-
-    (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID . RCURLY
-
-    RCURLY          shift and go to state 165
-
-
-state 161
 
     (56) func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types RPAREN LCURLY repeatLines RCURLY .
 
@@ -2525,7 +2535,7 @@ state 161
     RCURLY          reduce using rule 56 (func_declaration -> FUNC ID LPAREN RPAREN LPAREN return_types RPAREN LCURLY repeatLines RCURLY .)
 
 
-state 162
+state 161
 
     (55) funcion -> FUNC value LPAREN RPAREN ID LCURLY repeatLines RETURN ID RCURLY .
 
@@ -2544,21 +2554,21 @@ state 162
     RCURLY          reduce using rule 55 (funcion -> FUNC value LPAREN RPAREN ID LCURLY repeatLines RETURN ID RCURLY .)
 
 
-state 163
+state 162
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN . DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    DOTCOMA         shift and go to state 166
+    DOTCOMA         shift and go to state 165
 
 
-state 164
+state 163
 
     (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY . RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY
 
-    RETURN          shift and go to state 167
+    RETURN          shift and go to state 166
 
 
-state 165
+state 164
 
     (59) funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY .
 
@@ -2577,68 +2587,68 @@ state 165
     RCURLY          reduce using rule 59 (funcion -> FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY .)
 
 
-state 166
+state 165
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA . ID PLUS PLUS LCURLY repeatLines RCURLY
 
-    ID              shift and go to state 168
+    ID              shift and go to state 167
+
+
+state 166
+
+    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN . APPEND LPAREN ID COMMA ID RPAREN RCURLY
+
+    APPEND          shift and go to state 168
 
 
 state 167
 
-    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN . APPEND LPAREN ID COMMA ID RPAREN RCURLY
+    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID . PLUS PLUS LCURLY repeatLines RCURLY
 
-    APPEND          shift and go to state 169
+    PLUS            shift and go to state 169
 
 
 state 168
 
-    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID . PLUS PLUS LCURLY repeatLines RCURLY
+    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND . LPAREN ID COMMA ID RPAREN RCURLY
 
-    PLUS            shift and go to state 170
+    LPAREN          shift and go to state 170
 
 
 state 169
 
-    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND . LPAREN ID COMMA ID RPAREN RCURLY
+    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS . PLUS LCURLY repeatLines RCURLY
 
-    LPAREN          shift and go to state 171
+    PLUS            shift and go to state 171
 
 
 state 170
 
-    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS . PLUS LCURLY repeatLines RCURLY
+    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN . ID COMMA ID RPAREN RCURLY
 
-    PLUS            shift and go to state 172
+    ID              shift and go to state 172
 
 
 state 171
 
-    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN . ID COMMA ID RPAREN RCURLY
+    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS . LCURLY repeatLines RCURLY
 
-    ID              shift and go to state 173
+    LCURLY          shift and go to state 173
 
 
 state 172
 
-    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS . LCURLY repeatLines RCURLY
+    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID . COMMA ID RPAREN RCURLY
 
-    LCURLY          shift and go to state 174
+    COMMA           shift and go to state 174
 
 
 state 173
 
-    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID . COMMA ID RPAREN RCURLY
-
-    COMMA           shift and go to state 175
-
-
-state 174
-
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY . repeatLines RCURLY
     (6) repeatLines -> . line
     (7) repeatLines -> . line repeatLines
-    (8) line -> . ID EQUALS value
+    (8) line -> . ID EQUALSVAR value
     (9) line -> . stamentFor
     (10) line -> . consulta
     (11) line -> . push
@@ -2691,7 +2701,7 @@ state 174
     INT             shift and go to state 13
     FLOAT           shift and go to state 28
 
-    repeatLines                    shift and go to state 176
+    repeatLines                    shift and go to state 175
     line                           shift and go to state 3
     stamentFor                     shift and go to state 5
     consulta                       shift and go to state 6
@@ -2708,28 +2718,28 @@ state 174
     mathExp                        shift and go to state 23
     number                         shift and go to state 27
 
-state 175
+state 174
 
     (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA . ID RPAREN RCURLY
 
-    ID              shift and go to state 177
+    ID              shift and go to state 176
+
+
+state 175
+
+    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines . RCURLY
+
+    RCURLY          shift and go to state 177
 
 
 state 176
 
-    (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines . RCURLY
+    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID . RPAREN RCURLY
 
-    RCURLY          shift and go to state 178
+    RPAREN          shift and go to state 178
 
 
 state 177
-
-    (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID . RPAREN RCURLY
-
-    RPAREN          shift and go to state 179
-
-
-state 178
 
     (36) stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY .
 
@@ -2748,14 +2758,14 @@ state 178
     RCURLY          reduce using rule 36 (stamentFor -> FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY .)
 
 
-state 179
+state 178
 
     (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN . RCURLY
 
-    RCURLY          shift and go to state 180
+    RCURLY          shift and go to state 179
 
 
-state 180
+state 179
 
     (54) push -> FUNC PUSH LPAREN ID STACK COMMA ID ID RPAREN STACK LCURLY RETURN APPEND LPAREN ID COMMA ID RPAREN RCURLY .
 
@@ -2781,4 +2791,7 @@ WARNING: shift/reduce conflict for DIVIDE in state 27 resolved as shift
 WARNING: shift/reduce conflict for MINUS in state 27 resolved as shift
 WARNING: shift/reduce conflict for PLUS in state 27 resolved as shift
 WARNING: shift/reduce conflict for TIMES in state 27 resolved as shift
-WARNING: shift/reduce conflict for LPAREN in state 38 resolved as shift
+WARNING: shift/reduce conflict for LPAREN in state 37 resolved as shift
+WARNING: reduce/reduce conflict in state 55 resolved using rule (value -> INT)
+WARNING: rejected rule (line -> ID EQUALSVAR INT) in state 55
+WARNING: Rule (line -> ID EQUALSVAR INT) is never reduced

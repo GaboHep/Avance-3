@@ -149,18 +149,11 @@ def t_COMMENT(t):
 
 #Contruir analizador
 lexer = lex.lex()
+tokensList = []
 
-#Testeando
-data = '''
+def getTokensList(lexer):
+  tokensList.clear()
+  for tok in lexer:
+    product = f'Type: {tok.type} Value: {tok.value} Line: {tok.lineno} Position: {tok.lexpos}'
+    tokensList.append(product)
 
-      '''
-
-#Datos de entrada
-lexer.input(data)
-
-# Tokenizador
-while True:
-  tok = lexer.token()
-  if not tok:
-    break  #Rompe
-  print(tok)
