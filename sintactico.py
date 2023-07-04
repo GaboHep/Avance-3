@@ -40,6 +40,8 @@ def p_line(p):
        | ID EQUALSVAR INT
        | retorno
        | declaration
+       | sentence
+       | return
     '''
 
 
@@ -210,21 +212,6 @@ def p_param(p):
   '''param : value ID 
     '''
 
-
-#Avance Raul Leon
-
-#def p_statement(p):
-#  '''statement : print
-#  | ID
-#  '''      XD LOCO comenta eso no mas xD ando comiendo
-
-#def p_print(p):
-#  '''
-#  print : PRINT LPAREN ID RPAREN
-#  '''
-
-# ANALIZADOR SINTACTICO
-
 #REGLAS SEMANTICAS
 
 #Gabriel
@@ -252,6 +239,25 @@ def p_mathExpProd(p):
 
 
 #Raul
+#Regla Semántica para una Sentencia de Impresión
+
+
+def p_sentence(p):
+  '''sentence : FMT PERIOD PRINTLN LPAREN STR RPAREN 
+    | FMT PERIOD PRINTF LPAREN STR RPAREN 
+    
+  '''
+
+
+#Regla Semántica para una Sentencia de Return
+
+
+def p_return(p):
+  '''return : RETURN expression 
+    | RETURN INT 
+    | RETURN sentence 
+ '''
+
 
 #Xavi
 

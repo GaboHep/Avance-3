@@ -54,9 +54,10 @@ reserved = {
   'len': 'LEN',
   'package': 'PACKAGE',
   'main': 'MAIN',
-  'printf': 'PRINTF',
   'switch': 'SWITCH',
   'case': 'CASE',
+  'Printf': 'PRINTF',
+  'Println': 'PRINTLN',
   'else': 'ELSE',
   'import': 'IMPORT',
   'Pi': 'PI',
@@ -68,7 +69,8 @@ reserved = {
   'struct': 'STRUCT',
   'Push': 'PUSH',
   'append': 'APPEND',
-  'var': 'VAR'
+  'var': 'VAR',
+  'fmt': 'FMT'
 }
 
 #Sequencia de tokens, puede ser lista o tupla
