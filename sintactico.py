@@ -42,6 +42,9 @@ def p_line(p):
        | declaration
        | sentence
        | return
+       | defer_statement
+       | case_statements
+       | constant_declaration
     '''
 
 
@@ -260,6 +263,29 @@ def p_return(p):
 
 
 #Xavi
+#Regla Semántica para Casos en una Sentencia "switch"
+def p_case_statements(p):
+    '''
+    case_statements : CASE INT TWODOTS line 
+                    | CASE INT TWODOTS line case_statements
+                    | DEFAULT TWODOTS line
+    '''
+#Regla Semántica para defer
+def p_defer_statement(p):
+    '''
+    defer_statement : DEFER line
+    '''
+#Regla Semántica para declarar const
+def p_constant_declaration(p):
+    '''
+    constant_declaration : CONST variablenum
+    '''
+
+def p_variablenum(p):
+    '''
+    variablenum : ID EQUALS number
+    '''
+
 
 
 def p_error(p):

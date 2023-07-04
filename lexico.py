@@ -70,7 +70,10 @@ reserved = {
   'Push': 'PUSH',
   'append': 'APPEND',
   'var': 'VAR',
-  'fmt': 'FMT'
+  'fmt': 'FMT',
+  'default': 'DEFAULT',
+  'defer': 'DEFER',
+  'const': 'CONST'
 }
 
 #Sequencia de tokens, puede ser lista o tupla
