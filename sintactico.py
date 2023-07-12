@@ -46,6 +46,8 @@ def p_line(p):
        | case_statements
        | constant_declaration
        | list_function
+       | emptySlice
+       | mainFunction
     '''
 
 
@@ -153,6 +155,9 @@ def p_elemArray(p):
 def p_slice(p):
   '''slice : ID EQUALSVAR LBRACKETS RBRACKETS ID LCURLY elemSlice RCURLY
   '''
+def p_emptySlice(p):
+  '''emptySlice : ID LBRACKETS RBRACKETS ID
+  '''
 
 
 def p_elemSlice(p):
@@ -206,8 +211,13 @@ def p_return_types(p):
 
 
 def p_function(p):
-  '''funcion : FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY'''
+  '''funcion : FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY
+    | FUNC ID LPAREN param_list RPAREN LCURLY repeatLines RCURLY
+    '''
 
+def p_mainFunction(p):
+  '''mainFunction : FUNC MAIN LPAREN RPAREN LCURLY repeatLines RCURLY
+    '''
 
 def p_param_list(p):
   '''param_list : param
@@ -217,6 +227,7 @@ def p_param_list(p):
 
 def p_param(p):
   '''param : value ID 
+    | emptySlice
     '''
   
 def p_list_function(p):
