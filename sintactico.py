@@ -45,6 +45,7 @@ def p_line(p):
        | defer_statement
        | case_statements
        | constant_declaration
+       | list_function
     '''
 
 
@@ -61,6 +62,8 @@ def p_expression(p):
   '''expression : ID comparator ID
     | ID comparator INT 
     | ID
+    | list_function comparator INT 
+    | list_function comparator ID 
   '''
 
 
@@ -119,6 +122,7 @@ def p_statements(p):
 
 def p_statement(p):
   ''' statement : ID 
+      | sentence
   '''
 
 
@@ -202,7 +206,7 @@ def p_return_types(p):
 
 
 def p_function(p):
-  'funcion : FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY'
+  '''funcion : FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY'''
 
 
 def p_param_list(p):
@@ -214,6 +218,13 @@ def p_param_list(p):
 def p_param(p):
   '''param : value ID 
     '''
+  
+def p_list_function(p):
+  '''list_function : ID LPAREN param_list RPAREN
+  | LEN LPAREN ID RPAREN
+  
+  '''
+
 
 #REGLAS SEMANTICAS
 
@@ -246,11 +257,21 @@ def p_mathExpProd(p):
 
 
 def p_sentence(p):
-  '''sentence : FMT PERIOD PRINTLN LPAREN STR RPAREN 
-    | FMT PERIOD PRINTF LPAREN STR RPAREN 
+  '''sentence : FMT PERIOD PRINTLN LPAREN arguments RPAREN 
+    | FMT PERIOD PRINTF LPAREN arguments RPAREN 
     
   '''
 
+def p_argument(p):
+  '''argument : STR
+    | ID
+  '''
+
+def p_arguments(p):
+  '''arguments : argument
+    | argument COMMA arguments
+    
+  '''
 
 #Regla Semántica para una Sentencia de Return
 

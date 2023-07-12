@@ -2,17 +2,23 @@ import ply.lex as lex
 
 #Algoritmo Raul Leon
 
-#func factorial(n int) int {
-#    if n == 0 {
-#        return 1
-#    }
-#    return n * factorial(n-1)
-#}
+# func processParams(name string, age int, data []int) {
+# 	if len(data) > 0 {
+# 		slicedData := append(data, age) 
+# 		fmt.Println("Nombre:", name)
+# 		fmt.Println("Edad:", age)
+# 		fmt.Println("Slice original:", data)
+# 		fmt.Println("Slice después de añadir la edad:", slicedData)
+# 	} else {
+# 		fmt.Println("El slice está vacío.")
+# 	}
+# }
 
-#func main() {
-#    number := 5
-#    result := factorial(number)
-#}
+# func main() {
+# 	slice := []int{1, 2, 3, 4, 5}
+# 	processParams("Raul", 21, slice)
+
+# }
 
 #Algortimo Pablo Herrera
 
