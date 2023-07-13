@@ -12,7 +12,8 @@ def p_value(p):
   '''value : INT 
   | FLOAT 
   | STR
-  | ID'''
+  | ID
+  '''
 
 
 #Linea y su regla de produccion
@@ -48,6 +49,9 @@ def p_line(p):
        | list_function
        | emptySlice
        | mainFunction
+       | expression
+       | statement
+       | ID EQUALSVAR ID LBRACKETS INT RBRACKETS
     '''
 
 
@@ -66,6 +70,7 @@ def p_expression(p):
     | ID
     | list_function comparator INT 
     | list_function comparator ID 
+    | ID LBRACKETS ID RBRACKETS MORETHAN ID
   '''
 
 
@@ -90,7 +95,7 @@ def p_operator(p):
 #Gabriel
 #FOR
 def p_stamentFor(p):
-  '''stamentFor : FOR ID EQUALS INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
+  '''stamentFor : FOR ID EQUALSVAR INT DOTCOMA ID MINUSTHAN LEN LPAREN ID RPAREN DOTCOMA ID PLUS PLUS LCURLY repeatLines RCURLY
   '''
 
 
@@ -125,6 +130,7 @@ def p_statements(p):
 def p_statement(p):
   ''' statement : ID 
       | sentence
+      | ID EQUALS ID LBRACKETS ID RBRACKETS
   '''
 
 
@@ -155,6 +161,8 @@ def p_elemArray(p):
 def p_slice(p):
   '''slice : ID EQUALSVAR LBRACKETS RBRACKETS ID LCURLY elemSlice RCURLY
   '''
+
+
 def p_emptySlice(p):
   '''emptySlice : ID LBRACKETS RBRACKETS ID
   '''
@@ -188,7 +196,7 @@ def p_push(p):
 #Gabriel
 # Regla declaracion de funciones sin parametros
 def p_funcionSinPar(p):
-  '''funcion : FUNC value LPAREN RPAREN ID LCURLY repeatLines RETURN ID RCURLY
+  '''funcion : FUNC ID LPAREN RPAREN ID LCURLY repeatLines RCURLY
       '''
 
 
@@ -215,9 +223,11 @@ def p_function(p):
     | FUNC ID LPAREN param_list RPAREN LCURLY repeatLines RCURLY
     '''
 
+
 def p_mainFunction(p):
   '''mainFunction : FUNC MAIN LPAREN RPAREN LCURLY repeatLines RCURLY
     '''
+
 
 def p_param_list(p):
   '''param_list : param
@@ -229,7 +239,8 @@ def p_param(p):
   '''param : value ID 
     | emptySlice
     '''
-  
+
+
 def p_list_function(p):
   '''list_function : ID LPAREN param_list RPAREN
   | LEN LPAREN ID RPAREN
@@ -275,16 +286,19 @@ def p_sentence(p):
     
   '''
 
+
 def p_argument(p):
   '''argument : STR
     | ID
   '''
+
 
 def p_arguments(p):
   '''arguments : argument
     | argument COMMA arguments
     
   '''
+
 
 #Regla Semántica para una Sentencia de Return
 
@@ -299,24 +313,29 @@ def p_return(p):
 #Xavi
 #Regla Semántica para Casos en una Sentencia "switch"
 def p_case_statements(p):
-    '''
+  '''
     case_statements : CASE INT TWODOTS line 
                     | CASE INT TWODOTS line case_statements
                     | DEFAULT TWODOTS line
     '''
+
+
 #Regla Semántica para defer
 def p_defer_statement(p):
-    '''
+  '''
     defer_statement : DEFER line
     '''
+
+
 #Regla Semántica para declarar const
 def p_constant_declaration(p):
-    '''
+  '''
     constant_declaration : CONST variablenum
     '''
 
+
 def p_variablenum(p):
-    '''
+  '''
     variablenum : ID EQUALS number
     '''
 
