@@ -6,7 +6,6 @@ import ply.lex as lex
 # 	if len(data) > 0 {
 # 		slicedData := append(data, age) 
 # 		fmt.Println("Nombre:", name)
-# 		fmt.Println("Slice original:", data)
 # 		fmt.Println("Slice después de añadir la edad:", slicedData)
 # 	} else {
 # 		fmt.Println("El slice está vacío")

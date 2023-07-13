@@ -30,7 +30,7 @@ def p_line(p):
       | stamentFor
        | consulta 
        | push
-       | funcion
+       | function
        | array
        | slice
        | mathExpProd
@@ -52,6 +52,7 @@ def p_line(p):
        | expression
        | statement
        | ID EQUALSVAR ID LBRACKETS INT RBRACKETS
+       | functionAppend
     '''
 
 
@@ -123,7 +124,7 @@ def p_consultaIfElse(p):
 
 def p_statements(p):
   '''statements : statement
-  | statement COMMA statements
+  | statement statements
   '''
 
 
@@ -131,6 +132,7 @@ def p_statement(p):
   ''' statement : ID 
       | sentence
       | ID EQUALS ID LBRACKETS ID RBRACKETS
+      | functionAppend
   '''
 
 
@@ -219,8 +221,12 @@ def p_return_types(p):
 
 
 def p_function(p):
-  '''funcion : FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY
+  '''function : FUNC ID LPAREN param_list RPAREN ID LCURLY repeatLines RETURN ID RCURLY
     | FUNC ID LPAREN param_list RPAREN LCURLY repeatLines RCURLY
+    '''
+
+def p_functionAppend(p):
+  '''functionAppend : ID EQUALSVAR APPEND LPAREN param_list RPAREN
     '''
 
 
@@ -238,6 +244,7 @@ def p_param_list(p):
 def p_param(p):
   '''param : value ID 
     | emptySlice
+    | ID
     '''
 
 
