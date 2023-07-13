@@ -246,7 +246,9 @@ def p_list_function(p):
 def p_declaration(p):
   '''declaration : VAR ID ID
   | VAR ID ID EQUALSVAR number
-  | VAR ID ID EQUALSVAR STR'''
+  | VAR ID ID EQUALSVAR STR
+  | VAR ID ID EQUALSVAR ID
+  '''
 
 
 # Regla Produccion de expresiones matematicas estilo 9+10/3-5
