@@ -2,6 +2,9 @@ import ply.lex as lex
 
 #Algoritmo Raul Leon
 
+#func processParams(name string, age int, data []int){ if len(data) > 0 {slicedData := append(data, age) fmt.Println("Nombre:", name) fmt.Println("Slice después de añadir la edad:", slicedData)} else {fmt.Println("El slice está vacío")}}
+#func main() { slice := []int{1, 2, 3, 4, 5} processParams("Raul", 21, slice) }
+
 # func processParams(name string, age int, data []int) {
 # 	if len(data) > 0 {
 # 		slicedData := append(data, age) 
