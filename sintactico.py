@@ -245,12 +245,19 @@ def p_param(p):
   '''param : value ID 
     | emptySlice
     | ID
+    | STR
+    | INT
     '''
 
 
 def p_list_function(p):
   '''list_function : ID LPAREN param_list RPAREN
   | LEN LPAREN ID RPAREN
+  
+  '''
+
+def p_call(p):
+  '''call : ID LPAREN param_list RPAREN
   
   '''
 
