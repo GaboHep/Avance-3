@@ -51,8 +51,8 @@ def p_line(p):
        | mainFunction
        | expression
        | statement
-       | ID EQUALSVAR ID LBRACKETS INT RBRACKETS
        | functionAppend
+       | funcion
     '''
 
 
@@ -273,6 +273,7 @@ def p_declaration(p):
   | VAR ID ID EQUALSVAR number
   | VAR ID ID EQUALSVAR STR
   | VAR ID ID EQUALSVAR ID
+  | VAR ID EQUALSVAR ID LBRACKETS INT RBRACKETS
   '''
 
 
